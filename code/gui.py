@@ -12,7 +12,7 @@ w = w // 2
 w = w - 250
 h = h // 2
 h = h - 150
-MainWindow.geometry('700x300+{}+{}'.format(w, h)) #Начальное положение окна по середине
+MainWindow.geometry('700x200+{}+{}'.format(w, h)) #Начальное положение окна по середине
 MainWindow.resizable(False, False)
 
 MainWindow.title("Генератор паролей")
@@ -64,13 +64,15 @@ special_symbols_checkbutton = Checkbutton(MainWindow, text="", variable=special_
 special_symbols_label.grid(column=5, row=4)
 special_symbols_checkbutton.grid(column=6, row=4)
 
+#Кнопка генерации пароля
+generate_button = Button(MainWindow, text="Сгеннерировать", width=62, padx=4, pady=8)
+generate_button.grid(columnspan=4, row=2)
 
+copy_button = Button(MainWindow, text="Скопировать", width=30, padx=2, pady=8)
+copy_button.grid(columnspan=2,row=3)
 
-
-
-
-
-
+delete_button = Button(MainWindow, text="Очистить поле", width=30, padx=2, pady=8)
+delete_button.grid(column=2, columnspan=2, row=3)
 
 
 MainWindow.mainloop()
