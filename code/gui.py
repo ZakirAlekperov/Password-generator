@@ -9,7 +9,8 @@ import main
 
 
 def generate_button_click():
-    password_textbox_text.set(number_of_signs_textbox_text.get())
+    ischeck = False
+    isdigit = False
     if main.check_checboxs_correct(numbers_checkbutton_state.get(),
                                   lowercase_checkbutton_state.get(),
                                   capital_letter_checkbutton_state.get(),
@@ -18,12 +19,22 @@ def generate_button_click():
                                lowercase_checkbutton_state.get(),
                                capital_letter_checkbutton_state.get(),
                                special_symbols_checkbutton_state.get())
+        ischeck = True
     else: 
         messagebox.showinfo("ERROR", "Выберете символы для пароля")
+        ischeck = False
     if main.is_correct_length(number_of_signs_textbox_text.get()):
+        isdigit = True
         pass
     else:
         messagebox.showinfo("ERROR", "Длина пароля должна быть числом, меньшим 50")
+        isdigit = False
+    if ischeck and isdigit:
+        password_textbox_text.set(main.password_print(number_of_signs_textbox_text.get(), 
+                                                      numbers_checkbutton_state.get(),
+                                                      lowercase_checkbutton_state.get(),
+                                                      capital_letter_checkbutton_state.get(),
+                                                      special_symbols_checkbutton_state.get()))
 
 
 def copy_button_click():
