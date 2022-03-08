@@ -1,18 +1,30 @@
-from cgitb import text
 from msilib.schema import Font
 from multiprocessing import Value
+from pyexpat.errors import messages
 from tkinter import *
+from tkinter import messagebox
 from tkinter.ttk import Checkbutton
 from turtle import left 
+import main
 
 
 def generate_button_click():
-    number_of_signs_textbox_text.get()
-    lowercase_checkbutton_state.get()
-    capital_letter_checkbutton_state.get()
-    special_symbols_checkbutton_state.get()
-    
-    pass
+    password_textbox_text.set(number_of_signs_textbox_text.get())
+    if main.check_checboxs_correct(numbers_checkbutton_state.get(),
+                                  lowercase_checkbutton_state.get(),
+                                  capital_letter_checkbutton_state.get(),
+                                  special_symbols_checkbutton_state.get()):
+        main.check_checkboxs_value(numbers_checkbutton_state.get(), 
+                               lowercase_checkbutton_state.get(),
+                               capital_letter_checkbutton_state.get(),
+                               special_symbols_checkbutton_state.get())
+    else: 
+        messagebox.showinfo("ERROR", "Выберете символы для пароля")
+    if main.is_correct_length(number_of_signs_textbox_text.get()):
+        pass
+    else:
+        messagebox.showinfo("ERROR", "Длина пароля должна быть числом, меньшим 50")
+
 
 def copy_button_click():
     MainWindow.clipboard_append(password_textbox_text.get())
@@ -54,14 +66,15 @@ number_of_signs_label = Label(MainWindow,
                               text="Длина пароля", 
                               font=("Arial Bold", 10), 
                               width=20,
-                              textvariable=number_of_signs_textbox_text)
+                              )
 number_of_signs_label.grid(column=5, 
                            row=0,
                            padx=5,
                            pady=5)
-number_of_signs_textbox = Entry(MainWindow, 
+number_of_signs_textbox = Entry(MainWindow,
                                 width=4, 
-                                font=("Arial Bold", 10))
+                                font=("Arial Bold", 10),
+                                textvariable=number_of_signs_textbox_text)
 number_of_signs_textbox.grid(column=6,
                              row=0, 
                              padx=5)
@@ -123,21 +136,33 @@ special_symbols_label.grid(column=5, row=4)
 special_symbols_checkbutton.grid(column=6, row=4)
 
 #Кнопка генерации пароля
-generate_button = Button(MainWindow, text="Сгеннерировать", width=62, padx=4, pady=8, command=generate_button_click())
+generate_button = Button(MainWindow, 
+                         text="Сгеннерировать", 
+                         width=62, 
+                         padx=4, 
+                         pady=8, 
+                         command=generate_button_click
+                         )
 generate_button.grid(columnspan=4, row=2)
 
 #Кнопка копирования пароля
-copy_button = Button(MainWindow, text="Скопировать", width=30, padx=2, pady=8, command=copy_button_click)
+copy_button = Button(MainWindow, 
+                     text="Скопировать", 
+                     width=30, 
+                     padx=2, 
+                     pady=8, 
+                     command=copy_button_click
+                     )
 copy_button.grid(columnspan=2,row=3)
 
 #Кнопка очистки поля пароля
-delete_button = Button(MainWindow, text="Очистить поле", width=30, padx=2, pady=8, command=delete_button_click)
+delete_button = Button(MainWindow, 
+                       text="Очистить поле", 
+                       width=30, 
+                       padx=2, 
+                       pady=8, 
+                       command=delete_button_click
+                       )
 delete_button.grid(column=2, columnspan=2, row=3)
-
-
-
-
-
-
 
 MainWindow.mainloop()
